@@ -1,0 +1,28 @@
+{
+  "tauri": {
+    "cli": {
+      "description": "file-watcher reproducible",
+      "longDescription": "file-watcher reproducible",
+      "beforeHelp": "",
+      "afterHelp": "",
+      "args": [
+        {
+          "name": "ui-path",
+          "takesValue": true,
+          "multiple": false
+        }
+      ],
+      "subcommands": {
+        "subcommand-name": {
+        }
+      }
+    },
+    "allowlist": {
+      "all": true
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": []
+  }
+}
