@@ -79,24 +79,19 @@ fn main() {
 							tx.send(String::from("Reload")).unwrap();
 						},
 						Err(e) => println!("watch error: {:?}", e),
-						}
+					}
 				}
 
 			});
 
 			// Reload window if file has changed in ui folder
-			match rx.recv() {
-				Ok(_) => {
-					println!("File change detected. Reloading tauri window...");
-					match window.eval("location.reload()") {
-						Ok(()) => (),
-						Err(e) => println!("Failed to reload window: {:?}", e),
-					};
-				},
-				Err(_) => (),
+			for _ in rx.recv() {
+				println!("File change detected. Reloading tauri window...");
+				match window.eval("location.reload()") {
+					Ok(()) => (),
+					Err(e) => println!("Failed to reload window: {:?}", e),
+				};
 			}
-
-			watch_handle.join().unwrap();
 
 		Ok(())
 	})
