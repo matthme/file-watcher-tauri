@@ -13,7 +13,7 @@ use std::sync::mpsc;
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+	format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
 fn main() {
@@ -31,17 +31,17 @@ fn main() {
 					WindowUrl::App("index.html".into())
 				)
 				.on_web_resource_request(move |request, response| {
-				let uri = request.uri();
-				match uri {
-					"tauri://localhost" => {
-					let mutable_response = response.body_mut();
-					match read(index_path.clone()) {
-						Ok(index_html) => *mutable_response = index_html, // TODO! Check if there are better ways of dealing with errors here
-						Err(e) => println!("Unable to read file."),
+					let uri = request.uri();
+					match uri {
+						"tauri://localhost" => {
+							let mutable_response = response.body_mut();
+							match read(index_path.clone()) {
+								Ok(index_html) => *mutable_response = index_html, // TODO! Check if there are better ways of dealing with errors here
+								Err(e) => println!("Unable to read file."),
+							}
+						},
+						_ => ()
 					}
-					},
-					_ => ()
-				}
 				})
 				.inner_size(1000.0, 700.0)
 				.title("Tauri-App")
@@ -64,19 +64,19 @@ fn main() {
 				};
 
 				match watcher.watch(assets_path.as_path(), RecursiveMode::Recursive) {
-						Ok(()) => (),
-						Err(e) => {
-								println!("Failed to watch: {:?}", e);
-								panic!("Failed to watch.");
-						}
+					Ok(()) => (),
+					Err(e) => {
+						println!("Failed to watch: {:?}", e);
+						panic!("Failed to watch.");
+					}
 				};
 
 				// keep listening to rx_watcher to keep the thread running
 				for res in rx_watcher {
 					match res {
 						Ok(event) => {
-								println!("event: {:?}", event);
-								tx.send(String::from("Reload")).unwrap();
+							println!("event: {:?}", event);
+							tx.send(String::from("Reload")).unwrap();
 						},
 						Err(e) => println!("watch error: {:?}", e),
 						}
